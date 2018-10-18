@@ -10,7 +10,7 @@ import static java.time.LocalTime.of;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static ru.javawebinar.topjava.dao.MealDao.mealList;
+import static ru.javawebinar.topjava.dao.MealDaoInMemory.mealList;
 import static ru.javawebinar.topjava.util.MealUtil.getFilteredWithExceeded;
 
 @DisplayName("Тестирование класса MealUtil")
@@ -19,8 +19,11 @@ public class MealUtilTest {
     @RepeatedTest(5)
     @DisplayName("Тестирование метода getFilteredWithExceeded")
     void getFilteredWithExceededTest() {
-        List<MealWithExceed> listMealWithExceed
-                = getFilteredWithExceeded(mealList, of(12, 0), of(21, 0), 2000);
+        List<MealWithExceed> listMealWithExceed= getFilteredWithExceeded(
+                mealList,
+                of(12, 0),
+                of(21, 0),
+                2000);
         assertAll(
                 () -> assertThat(listMealWithExceed.size()).isEqualTo(4),
 

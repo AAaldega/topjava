@@ -25,6 +25,11 @@ public class MealUtil {
     }
 
     private static MealWithExceed getMealWithExceed(Meal meal, boolean exceed) {
-        return new MealWithExceed(meal.getDateTime(), meal.getDescription(), meal.getCalories(), exceed);
+        return new MealWithExceed(
+                meal.getId(),
+                meal.getDateTime(),
+                meal.getDescription(),
+                meal.getCalories(),
+                exceed);
     }
 }
