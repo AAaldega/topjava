@@ -10,6 +10,8 @@ import java.time.LocalTime;
 @Data
 @AllArgsConstructor
 public class Meal {
+
+    private int id;
     private LocalDateTime dateTime;
     private String description;
     private int calories;
@@ -20,5 +22,9 @@ public class Meal {
 
     public LocalTime getTime() {
         return dateTime.toLocalTime();
+    }
+
+    public boolean isNew() {
+        return id == 0;
     }
 }

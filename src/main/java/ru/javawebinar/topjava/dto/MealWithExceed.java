@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 public class MealWithExceed {
+
+    private int id;
     private LocalDateTime dateTime;
     private String description;
     private int calories;
