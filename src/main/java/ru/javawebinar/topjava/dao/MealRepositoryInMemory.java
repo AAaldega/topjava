@@ -9,7 +9,7 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-public class MealDaoInMemory implements MealDao {
+public class MealRepositoryInMemory implements MealRepository {
 
     public static List<Meal> mealList = new ArrayList<>();
 
@@ -22,34 +22,33 @@ public class MealDaoInMemory implements MealDao {
         mealList.add(new Meal(6, LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510));
     }
 
-    public void deleteMeal(int id) {
+    public void delete(int id) {
         mealList = mealList.stream()
                 .filter(meal -> meal.getId() != id)
                 .collect(toList());
     }
 
-    public Meal addMeal(Meal meal) {
-        int maxId = mealList.stream()
-                .mapToInt(Meal::getId)
-                .max().orElse(0);
-        meal.setId(maxId + 1);
-        mealList.add(meal);
+    public Meal save(Meal meal) {
+        if (meal.getId() == 0) {
+            int maxId = mealList.stream()
+                    .mapToInt(Meal::getId)
+                    .max().orElse(0);
+            meal.setId(maxId + 1);
+            mealList.add(meal);
+        } else {
+            mealList = mealList.stream()
+                    .filter(mealfrom -> mealfrom.getId() != meal.getId())
+                    .collect(toList());
+            mealList.add(meal);
+        }
         return meal;
     }
 
-    public Meal updateMeal(Meal meal) {
-        mealList = mealList.stream()
-                .filter(mealfrom -> mealfrom.getId() != meal.getId())
-                .collect(toList());
-        mealList.add(meal);
-        return meal;
-    }
-
-    public List<Meal> findAll() {
+    public List<Meal> getAll() {
         return mealList;
     }
 
-    public Meal find(int id) {
+    public Meal get(int id) {
         return mealList.stream()
                 .filter(meal -> id == meal.getId())
                 .findFirst().orElse(null);

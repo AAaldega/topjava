@@ -23,4 +23,8 @@ public class Meal {
     public LocalTime getTime() {
         return dateTime.toLocalTime();
     }
+
+    public boolean isNew() {
+        return id == 0;
+    }
 }

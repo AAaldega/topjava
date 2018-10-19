@@ -10,7 +10,7 @@ import static java.time.LocalTime.of;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static ru.javawebinar.topjava.dao.MealDaoInMemory.mealList;
+import static ru.javawebinar.topjava.dao.MealRepositoryInMemory.mealList;
 import static ru.javawebinar.topjava.util.MealUtil.getFilteredWithExceeded;
 
 @DisplayName("Тестирование класса MealUtil")
