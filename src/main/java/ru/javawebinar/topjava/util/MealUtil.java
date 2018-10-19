@@ -19,7 +19,7 @@ public class MealUtil {
         Map<LocalDate, Integer> groupByDateCalories = mealList.stream()
                 .collect(groupingBy(Meal::getDate, summingInt(Meal::getCalories)));
         return mealList.stream()
-                .filter(meal -> TimeUtil.isBeetwen(meal.getTime(), startTime, endTime))
+                .filter(meal -> TimeUtil.isBetween(meal.getTime(), startTime, endTime))
                 .map(meal -> getMealWithExceed(meal, groupByDateCalories.get(meal.getDate()) > caloriesPerDay))
                 .collect(toList());
     }

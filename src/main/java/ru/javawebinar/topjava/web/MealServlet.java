@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.web;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.javawebinar.topjava.dao.MealDao;
 import ru.javawebinar.topjava.dao.MealDaoInMemory;
 import ru.javawebinar.topjava.dto.MealWithExceed;
@@ -21,6 +22,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
+@Slf4j
 @WebServlet("/meals")
 public class MealServlet extends HttpServlet {
 
@@ -35,10 +37,13 @@ public class MealServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         mealDao = new MealDaoInMemory();
+        log.info("init finished");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        log.info("GET /meals {}", req.getMethod());
 
         String action = req.getParameter("action");
 
@@ -66,18 +71,21 @@ public class MealServlet extends HttpServlet {
     }
 
     private void createMeal(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log.info("create new Meal");
         req.getRequestDispatcher("mealForm.jsp").forward(req, resp);
     }
 
     private void editMeal(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = getIdFromRequest(req);
         Meal meal = mealDao.find(id);
+        log.info("edit meal : {}", meal);
         req.setAttribute("meal", meal);
         req.getRequestDispatcher("mealForm.jsp").forward(req, resp);
     }
 
     private void deleteMeal(HttpServletRequest req) {
         int id = getIdFromRequest(req);
+        log.info("delete meal id = {}", id);
         mealDao.deleteMeal(id);
     }
 
@@ -91,6 +99,9 @@ public class MealServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+        log.info("POST /meals {}", req.getMethod());
+
         req.setCharacterEncoding(UTF_8.displayName());
 
         String description = req.getParameter("description").trim();
